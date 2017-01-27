@@ -1,0 +1,71 @@
+.card {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.inputElement {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.bar {
+  padding-left: 10px;
+  padding-right: 10px;
+
+}
+.cardTitle {
+  flex-flow: row nowrap;
+  flex: auto;
+  div {
+    display: flex;
+    flex: auto;
+  }
+  &:hover &__hover {
+    display: flex !important;
+  }
+
+  &__hover {
+    display: none !important;
+  }
+}
+.cardActions {
+  flex-flow: row nowrap;
+}
+.titleBox {
+  display: flex;
+  flex: auto;
+  align-content: center;
+  align-items: center;
+  flex-flow: row nowrap;
+  width: 100%;
+}
+.titleText {
+  display: flex;
+  flex: none !important;
+
+  font-size: 1.2em;
+  font-style: normal;
+  font-weight: bold;
+}
+.subtitleText {
+  min-width: 0px;
+  margin-left: 20px;
+  font-style: oblique;
+  font-weight: normal;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  
+}
+.titleIcons {
+  display: none;
+  flex: none !important;
+  align-items: center;
+}
+.hoverIcon {
+  height: 1.4em;
+  width: 1.4em;
+}
+

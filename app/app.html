@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Secrets! Sneaker UI</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style>
+        .site {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+    </style>
+    <script>
+        (function() {
+            if (!process.env.HOT) {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = './dist/style.css';
+                // HACK: Writing the script path should be done with webpack
+                document.getElementsByTagName('head')[0].appendChild(link);
+            }
+        }());
+    </script>
+</head>
+
+<body>
+    <div id="root" class="site"></div>
+    <script>
+        {
+            const script = document.createElement('script');
+            const port = process.env.PORT || 3000;
+            script.src = (process.env.HOT) ?
+                'http://localhost:' + port + '/dist/bundle.js' :
+                './dist/bundle.js';
+            // HACK: Writing the script path should be done with webpack
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+
+</html>

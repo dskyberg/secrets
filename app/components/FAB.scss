@@ -1,0 +1,10 @@
+.button {
+  top: 4.5rem;
+  right: 0px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  z-index: 1000;
+  position: fixed;
+  transition: all .2s ease-in-out;
+  &:hover { transform: scale(1.1); }
+}

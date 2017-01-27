@@ -1,0 +1,98 @@
+/* eslint-disable max-len */
+/**
+ * Build config for development process that uses Hot-Module-Replacement
+ * https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
+ */
+import path from 'path';
+import autoprefixer from 'autoprefixer';
+import webpack from 'webpack';
+import validate from 'webpack-validator';
+import merge from 'webpack-merge';
+import formatter from 'eslint-formatter-pretty';
+import baseConfig from './webpack.config.base';
+import { Joi } from 'webpack-validator';
+
+// Add any webpack schema extensions not covered by the default 
+// webpack schema validation.
+// This joi schema will be `Joi.concat`-ed with the internal schema
+const yourSchemaExtension = Joi.object({
+    // this would just allow the property and doesn't perform any additional validation
+    sassLoader: Joi.any()
+})
+
+const port = process.env.PORT || 3000;
+
+const config = merge(baseConfig, {
+    debug: true,
+
+    devtool: 'inline-source-map',
+
+    entry: [
+        `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
+        'babel-polyfill',
+        './app/index'
+    ],
+
+    output: {
+        publicPath: `http://localhost:${port}/dist/`
+    },
+    externals: ['ws'],
+    module: {
+        noParse: ['ws'],
+        // preLoaders: [
+        //   {
+        //     test: /\.js$/,
+        //     loader: 'eslint-loader',
+        //     exclude: /node_modules/
+        //   }
+        // ],
+        loaders: [
+            // Pipe other styles through css modules and append to style.css
+            {
+                test: /(\.scss|\.css)$/,
+                loaders: [
+                    'style-loader',
+                    'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+                    'postcss-loader',
+                    'sass-loader'
+                ]
+            },
+
+            { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+            { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+            { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
+            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file?name=[name].[ext]' },
+            { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+            { test: /\.(ico|jpg|png|jpg|png|gif|ttf|eot|svg)$/, loader: 'file?name=[name].[ext]' }
+        ]
+    },
+
+    eslint: {
+        formatter
+    },
+    postcss: [autoprefixer],
+    sassLoader: {
+        data: '@import "theme/_config.scss";',
+        includePaths: [path.resolve(__dirname, './app')]
+    },
+
+    plugins: [
+
+        // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
+        new webpack.HotModuleReplacementPlugin(),
+
+        // “If you are using the CLI, the webpack process will not exit with an error code by enabling this plugin.”
+        // https://github.com/webpack/docs/wiki/list-of-plugins#noerrorsplugin
+        new webpack.NoErrorsPlugin(),
+
+        // NODE_ENV should be production so that modules do not perform certain development checks
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development')
+        })
+    ],
+
+    // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
+    target: 'electron-renderer'
+});
+
+export default validate(config, { schemaExtension: yourSchemaExtension });
