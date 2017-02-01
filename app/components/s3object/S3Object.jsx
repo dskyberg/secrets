@@ -1,10 +1,10 @@
 // @flow
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import Input from 'react-toolbox/lib/input';
 import { Avatar } from 'react-toolbox/lib/avatar';
-import {Button, IconButton} from 'react-toolbox/lib/button';
+import { Button, IconButton } from 'react-toolbox/lib/button';
 import ConfirmSaveDialog from './ConfirmSaveDialog';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 import HoverIcon from '../HoverIcon';
@@ -26,7 +26,7 @@ const iconClasses = {
   s3Save: 'fa fa-cloud-upload'
 };
 
-@observer 
+@observer
 export default class S3Object extends Component {
 
   static propTypes = {
@@ -67,7 +67,7 @@ export default class S3Object extends Component {
     if (this.state.deleting === true) {
       return;
     }
-    this.setState({deleting:true, confirmDeleteDialogActive:true});
+    this.setState({ deleting: true, confirmDeleteDialogActive: true });
   }
 
   /**
@@ -78,25 +78,25 @@ export default class S3Object extends Component {
     if (e) {
       e.stopPropagation();
     }
-    this.setState({newValue: this.state.obj.text()});
+    this.setState({ newValue: this.state.obj.text() });
   }
   handleChange = (value, e) => {
     if (e) {
       e.stopPropagation();
     }
-    this.setState({newValue: value});
+    this.setState({ newValue: value });
   }
   handleSaveEdit = (e) => {
     if (e) {
       e.stopPropagation();
     }
-    this.setState({confirmSaveDialogActive: true});
+    this.setState({ confirmSaveDialogActive: true });
   }
   handleCancelEdit = (e) => {
     if (e) {
       e.stopPropagation();
     }
-    this.setState({newValue: null});
+    this.setState({ newValue: null });
   }
 
 
@@ -110,12 +110,12 @@ export default class S3Object extends Component {
     switch (name) {
       case 'save':
         this.saveObject();
-        this.setState({confirmSaveDialogActive: false, newValue: null});
+        this.setState({ confirmSaveDialogActive: false, newValue: null });
         break;
       case 'delete':
         this.deleteObject();
-        this.setState({confirmDeleteDialogActive: false});
-       break;
+        this.setState({ confirmDeleteDialogActive: false });
+        break;
       default:
         console.log('Oops!  handleSaveDialog got a weird name:', name);
     }
@@ -127,16 +127,16 @@ export default class S3Object extends Component {
     }
     switch (name) {
       case 'save':
-        this.setState({newValue:null, confirmSaveDialogActive: false});
+        this.setState({ newValue: null, confirmSaveDialogActive: false });
         break;
       case 'delete':
-        this.setState({confirmDeleteDialogActive: false});
+        this.setState({ confirmDeleteDialogActive: false });
         break;
       default:
-         console.log('Oops!  handleCancelDialog got a weird name:', name);
+        console.log('Oops!  handleCancelDialog got a weird name:', name);
     }
   }
-  
+
 
   renderFetchIcon = (obj) => {
     if (obj.value !== null) {
@@ -144,20 +144,20 @@ export default class S3Object extends Component {
     }
 
     const fetchDisabled = this.state.fetching === true;
-    const eyeButton = (obj && obj.open) && null || 
-     <IconButton theme={theme} accent disabled={fetchDisabled} onClick={this.handleFetch}>
+    const eyeButton = (obj && obj.open) && null ||
+      <IconButton theme={theme} accent disabled={fetchDisabled} onClick={this.handleFetch}>
         <i className="fa fa-eye"></i>
       </IconButton>;
     return eyeButton;
   }
 
- renderEditIcon = (obj) => {
+  renderEditIcon = (obj) => {
     if (!this.props.active || obj.value === null || this.state.newValue !== null) {
       return null;
     }
-    return  <HoverIcon accent onClick={this.handleEdit}>
-        <i className={iconClasses.edit}></i>
-      </HoverIcon>;
+    return <HoverIcon accent onClick={this.handleEdit}>
+      <i className={iconClasses.edit}></i>
+    </HoverIcon>;
 
   }
 
@@ -165,18 +165,18 @@ export default class S3Object extends Component {
     if (!this.props.active || this.state.newValue === null) {
       return null;
     }
-    return  <HoverIcon accent onClick={this.handleSaveEdit}>
-        <i className={iconClasses.s3Save}></i>
-      </HoverIcon>;
+    return <HoverIcon accent onClick={this.handleSaveEdit}>
+      <i className={iconClasses.s3Save}></i>
+    </HoverIcon>;
 
   }
   renderCancelIcon = (obj) => {
     if (!this.props.active || this.state.newValue === null) {
       return null;
     }
-    return  <HoverIcon  accent onClick={this.handleCancelEdit}>
-        <i className={iconClasses.cancel}></i>
-      </HoverIcon>;
+    return <HoverIcon accent onClick={this.handleCancelEdit}>
+      <i className={iconClasses.cancel}></i>
+    </HoverIcon>;
 
   }
 
@@ -185,15 +185,15 @@ export default class S3Object extends Component {
       return null;
     }
     const fetchDisabled = this.state.fetching === true;
-    return  <HoverIcon primary  onClick={this.handleDelete}>
-        <i className={iconClasses.delete}></i>
-      </HoverIcon>;
+    return <HoverIcon primary onClick={this.handleDelete}>
+      <i className={iconClasses.delete}></i>
+    </HoverIcon>;
 
   }
 
   renderAvatar = (obj) => {
     const clz = obj.value !== null && 'fa fa-unlock' || 'fa fa-lock';
-    return <Avatar><i className={clz} style={{paddingTop:'7px'}}></i></Avatar>;
+    return <Avatar><i className={clz} style={{ paddingTop: '7px' }}></i></Avatar>;
   }
 
   renderCardTitle = (obj) => {
@@ -204,16 +204,16 @@ export default class S3Object extends Component {
     } else {
       if (obj.value !== null) {
         subtitle = obj.text();
-       }
+      }
     }
 
     return <CardTitle theme={theme} onClick={onClick}>
-        <div className={theme.titleBox} >
-          <div className={theme.titleText}>{obj.path}</div>
-          <div className={theme.subtitleText}>{subtitle}</div>
-          {this.renderCardActions(obj)}
-        </div>
-      </CardTitle>
+      <div className={theme.titleBox} >
+        <div className={theme.titleText}>{obj.path}</div>
+        <div className={theme.subtitleText}>{subtitle}</div>
+        {this.renderCardActions(obj)}
+      </div>
+    </CardTitle>
   }
 
   renderCardText = (obj) => {
@@ -231,49 +231,49 @@ export default class S3Object extends Component {
     }
     const value = (obj && obj.value !== null) && obj.text() || null;
     return <CardText theme={theme}>
-              {value}
-          </CardText>;
+      {value}
+    </CardText>;
   }
 
   renderCardActions = (obj) => {
-    const clz = classNames(theme.titleIcons, {[theme.cardTitle__hover]: !this.props.active});
+    const clz = classNames(theme.titleIcons, { [theme.cardTitle__hover]: !this.props.active });
     return <div className={clz}>
-            {this.renderEditIcon(obj)}
-            {this.renderDeleteIcon(obj)}
-            {this.renderS3SaveIcon(obj)}
-            {this.renderCancelIcon(obj)}
-          </div>
+      {this.renderEditIcon(obj)}
+      {this.renderDeleteIcon(obj)}
+      {this.renderS3SaveIcon(obj)}
+      {this.renderCancelIcon(obj)}
+    </div>
   }
 
   renderConfirmSaveDialog = () => {
     const {newValue} = this.state;
-    return <ConfirmSaveDialog 
-      obj={this.state.obj} 
-      onCancel={this.handleCancelDialog.bind(this,'save')}
-      onSave={this.handleSaveDialog.bind(this,'save')}
+    return <ConfirmSaveDialog
+      obj={this.state.obj}
+      onCancel={this.handleCancelDialog.bind(this, 'save')}
+      onSave={this.handleSaveDialog.bind(this, 'save')}
       active={this.state.confirmSaveDialogActive}
-      />;
+    />;
   }
 
   renderConfirmDeleteDialog = () => {
     return <ConfirmDeleteDialog
-      obj={this.state.obj} 
-      onCancel={this.handleCancelDialog.bind(this,'delete')}
-      onSave={this.handleSaveDialog.bind(this,'delete')}
+      obj={this.state.obj}
+      onCancel={this.handleCancelDialog.bind(this, 'delete')}
+      onSave={this.handleSaveDialog.bind(this, 'delete')}
       active={this.state.confirmDeleteDialogActive}
-      />;    
+    />;
   }
 
   render() {
     const {obj} = this.state;
     return (
       <div>
-      <Card theme={theme} raised>
+        <Card theme={theme} raised>
           {this.renderCardTitle(obj)}
           {this.renderCardText(obj)}
-       </Card>
-      {this.renderConfirmSaveDialog()}
-      {this.renderConfirmDeleteDialog()}
+        </Card>
+        {this.renderConfirmSaveDialog()}
+        {this.renderConfirmDeleteDialog()}
       </div>
     );
   }
@@ -290,53 +290,49 @@ export default class S3Object extends Component {
     if (this.state.fetching === true) {
       return;
     }
-    this.setState({fetching:true});
-     try {
+    this.setState({ fetching: true });
+    try {
       const {path} = this.props;
       const {s3Objects} = s3State;
       const obj = s3Objects.get(path);
       obj.open(kmsState.key, awsState.context)
-      .then((ok) => {
-        s3State.s3Objects.set(path, obj);
-        this.setState({obj:obj, fetching:false});
-      })
-      .catch((e) => {
-        //appState.setFetching(false);
-        this.setState({fetching:false});
-        console.log('S3Object.handleOpen failed:', e);
-      });
+        .then((ok) => {
+          s3State.setS3Object(path, obj);
+          this.setState({ obj: obj, fetching: false });
+        })
+        .catch((e) => {
+          //appState.setFetching(false);
+          this.setState({ fetching: false });
+          console.log('S3Object.fetchObject failed:', e);
+        });
     } catch (e) {
       //appState.setFetching(false);
-      this.setState({fetching:false});
-      console.log('S3Object.handleOpen - error:', e);
+      this.setState({ fetching: false });
+      console.log('S3Object.fetchObject - error:', e);
     }
   }
-    
+
   saveObject = () => {
     const {obj, newValue} = this.state;
     obj.save(kmsState.key, awsState.context, newValue)
-    .then((ok) => {
-      this.setState({confirmSaveDialogActive: false, newValue: null, obj: obj});
-      appState.setSnackLabel('Object saved: ' + obj.path);
-      appState.toggleSnack();
-    })
-    .catch((e) => {
-      appState.setSnackLabel('Save failed: ' + err);
-      appState.toggleSnack();
-    });
-  } 
+      .then((ok) => {
+        this.setState({ confirmSaveDialogActive: false, newValue: null, obj: obj });
+        appState.showSnack('Object saved: ' + obj.path);
+      })
+      .catch((e) => {
+        appState.showSnack(err.name + ':' + err.message, 'Save Failed', 'warning', 0);
+      });
+  }
 
   deleteObject = () => {
     const {obj} = this.state;
     obj.delete()
-    .then((ok) => {
-      appState.setSnackLabel('Object deleted: ' + obj.path);
-      appState.toggleSnack();
-      s3State.deleteS3Object(obj.path);
-    })
-    .catch((err) => {
-      appState.setSnackLabel('Delete failed: ' + err);
-      appState.toggleSnack();
-    });    
+      .then((ok) => {
+        appState.showSnack('Object deleted: ' + obj.path);
+        s3State.deleteS3Object(obj.path);
+      })
+      .catch((err) => {
+        appState.showSnack(err.name + ':' + err.message, 'Delete Failed', 'warning', 0);
+      });
   }
 }

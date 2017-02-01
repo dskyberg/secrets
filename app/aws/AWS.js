@@ -5,6 +5,7 @@ import EC2 from './EC2';
 import KMS from './KMS';
 import S3, { S3Bucket } from './S3';
 import IAM from './IAM';
+import STS from './STS';
 
 //import { requireTaskPool } from 'electron-remote';
 
@@ -14,6 +15,9 @@ class AWS {
     constructor() {
         this.aws_sdk = require('electron').remote.require('aws-sdk');
         awsState.setRegion(process.env.AWS_REGION);
+    }
+
+    init() {
         this.loadRegions();
         this.loadKeys();
         this.loadBuckets();
@@ -66,29 +70,32 @@ class AWS {
             .catch(err => {
                 console.log(err);
             });
-
     }
 
     getEC2() {
-        const sdk = new this.aws_sdk.EC2({ region: awsState.region });
+        const sdk = new this.aws_sdk.EC2(awsState.config);
         return new EC2(sdk);
     }
 
     getS3() {
-        const sdk = new this.aws_sdk.S3({ region: awsState.region });
+        const sdk = new this.aws_sdk.S3(awsState.config);
         return new S3(sdk);
     }
 
     getKMS() {
-        const sdk = new this.aws_sdk.KMS({ region: awsState.region });
+        const sdk = new this.aws_sdk.KMS(awsState.config);
         return new KMS(sdk);
     }
 
     getIAM() {
-        const sdk = new this.aws_sdk.IAM({ region: awsState.region });
+        const sdk = new this.aws_sdk.IAM(awsState.config);
         return new IAM(sdk);
     }
 
+    getSTS() {
+        const sdk = new this.aws_sdk.STS();
+        return new STS(sdk);
+    }
 }
 const aws = new AWS();
 export default aws;

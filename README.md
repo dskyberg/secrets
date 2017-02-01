@@ -45,16 +45,16 @@ runnable executables.
 
 ### Prerequisits
 
-#### 1. Get your AWS credentials
-This app uses the [AWS SDK for Node](https://aws.amazon.com/sdk-for-node-js/).  
-As such, you must have valid AWS credentials. See
-[Setting Credentials in Node.js](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html) 
-for info on how to load your `AWS_SECRET_ACCESS_KEY`, and `AWS_ACCESS_KEY_ID`,
-and optionally, your `AWS_REGION`.  
-
-Note: unlike the followng Sneaker specifc configuration values, the 
-`AWS_SECRET_ACCESS_KEY` and `AWS_ACCESS_KEY_ID`cannot be set from within the app.  
-However, you will be able to set/change the `AWS_REGION` from within the app.
+#### 1. Set your AWS Stuff
+This app leverates the AWS STS (AssumeRoleWithWebIdentity).  As such, you must
+set your AWS_ORG_ID as an env value before running:
+```
+> export AWS_ORG_ID=<your org id>
+```
+If you do not set AWS_REGION, then the app will default to us-west-2.  You can
+change the region within the app.  To set a default region, use:
+```
+> export AWS_REGION=<your region>
 
 #### 2. Set the default Sneaker environment
 See 

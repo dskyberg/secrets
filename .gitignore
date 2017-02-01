@@ -33,3 +33,4 @@ release
 dist
 main.js
 main.js.map
+credentials.json

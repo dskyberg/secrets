@@ -89,7 +89,6 @@ export default class Sneaker {
         if (this.context === null || this.context === '') {
             return ctx;
         }
-        console.log('Sneaker.contextToMap - context:', this.context);
         this.context.split('.').forEach((part) => {
             const parts = part.split('=');
             ctx.set(parts[0].trim(), parts[1].trim());

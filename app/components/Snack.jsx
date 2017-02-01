@@ -19,14 +19,17 @@ export default class Snack extends Component {
 
 
   render() {
+    const action = appState.snackAction;
     const active = appState.snackActive;
-    const label = appState.snackLabel;
+    const label =  appState.snackLabel;
+    const timeout = appState.snackTimeout;
+    const type = appState.snackType;
     return (
       <Snackbar
-        action='Dismiss'
+        action={action}
         active={active}
         label={label}
-        timeout={2000}
+        timeout={timeout}
         onClick={this.handleClick}
         onTimeout={this.handleTimeout}
         type='warning'

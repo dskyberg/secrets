@@ -1,15 +1,19 @@
 {
-  "name": "secrets",
-  "productName": "secrets",
-  "version": "0.1.0",
-  "description": "Desktop Manager for Sneaker",
-  "main": "./main.js",
-  "author": {
-    "name": "David Skyberg",
-    "email": "davidskyberg@gmail.com",
-    "url": "https://github.com/dskyberg"
-  },
-  "license": "MIT",
-  "dependencies": {
-  }
+    "name": "secrets",
+    "productName": "secrets",
+    "version": "0.1.0",
+    "description": "Desktop Manager for Sneaker",
+    "main": "./main.js",
+    "author": {
+        "name": "David Skyberg",
+        "email": "davidskyberg@gmail.com",
+        "url": "https://github.com/dskyberg"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "aws-sdk": "^2.7.21",
+        "co": "^4.6.0",
+        "googleapis": "^16.1.0",
+        "node-fetch": "^1.6.3"
+    }
 }

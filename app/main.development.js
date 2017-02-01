@@ -4,6 +4,7 @@ let menu;
 let template;
 let mainWindow = null;
 
+
 if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support'); // eslint-disable-line
     sourceMapSupport.install();
@@ -163,6 +164,12 @@ app.on('ready', async() => {
                 click() {
                     mainWindow.setFullScreen(!mainWindow.isFullScreen());
                 }
+            }, {
+                label: 'Toggle Developer Tools',
+                accelerator: 'Alt+Command+I',
+                click() {
+                    mainWindow.toggleDevTools();
+                }
             }]
         }, {
             label: 'Window',
@@ -245,6 +252,12 @@ app.on('ready', async() => {
                 accelerator: 'F11',
                 click() {
                     mainWindow.setFullScreen(!mainWindow.isFullScreen());
+                }
+            }, {
+                label: 'Toggle &Developer Tools',
+                accelerator: 'Alt+Ctrl+I',
+                click() {
+                    mainWindow.toggleDevTools();
                 }
             }]
         }, {

@@ -1,6 +1,6 @@
 {
     "name": "secrets",
-    "productName": "SwankimuttSecrets",
+    "productName": "Secrets",
     "version": "0.1.0",
     "description": "Manage encrypted data in S3 using AWS KMS keys",
     "main": "main.js",
@@ -19,15 +19,15 @@
         "start-hot": "cross-env HOT=1 NODE_ENV=development electron -r babel-register -r babel-polyfill ./app/main.development",
         "postinstall": "concurrently \"npm run flow-typed-install\" \"install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
         "dev": "npm run hot-server -- --start-hot",
-        "package": "npm run build && build --publish never",
-        "package-win": "npm run build && build --win --x64",
-        "package-linux": "npm run build && build --linux",
-        "package-all": "npm run build && build -mwl",
+        "package": "build --publish never",
+        "package-win": "build --win --x64",
+        "package-linux": "build --linux",
+        "package-all": "build -mwl",
         "cleanup": "mop -v"
     },
     "build": {
         "productName": "Secrets",
-        "appId": "org.swankimutt.secrets",
+        "appId": "org.dskyberg.secrets",
         "category": "public.app-category.tools",
         "dmg": {
             "contents": [{
@@ -47,6 +47,7 @@
             "dist/",
             "node_modules/",
             "app.html",
+            "api/electron_google_oauth.js",
             "main.js",
             "main.js.map",
             "package.json"
@@ -59,11 +60,11 @@
                 "deb",
                 "AppImage"
             ]
+        },
+        "directories": {
+            "buildResources": "resources",
+            "output": "release"
         }
-    },
-    "directories": {
-        "buildResources": "resources",
-        "output": "release"
     },
     "bin": {
         "electron": "./node_modules/.bin/electron"
@@ -79,7 +80,7 @@
     },
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/chentsulin/electron-react-boilerplate/issues"
+        "url": "https://github.com/dskyberg/secrets/issues"
     },
     "keywords": [
         "electron",
@@ -96,6 +97,7 @@
     "devDependencies": {
         "asar": "^0.12.3",
         "autoprefixer": "^6.5.4",
+        "aws-sdk": "^2.7.21",
         "babel-core": "^6.20.0",
         "babel-eslint": "^7.1.1",
         "babel-loader": "^6.2.9",
@@ -116,6 +118,7 @@
         "babili-webpack-plugin": "^0.0.8",
         "boiler-room-custodian": "^0.4.2",
         "chai": "^3.5.0",
+        "co": "^4.6.0",
         "concurrently": "^3.1.0",
         "cross-env": "^3.1.3",
         "css-loader": "^0.26.1",
@@ -143,12 +146,14 @@
         "file-loader": "^0.9.0",
         "flow-bin": "^0.37.0",
         "flow-typed": "^2.0.0",
+        "googleapis": "^16.1.0",
         "html-webpack-plugin": "^2.24.1",
         "jsdom": "^9.8.3",
         "json-loader": "^0.5.4",
         "minimist": "^1.2.0",
         "mocha": "^3.2.0",
-        "node-sass": "^4.1.1",
+        "node-fetch": "^1.6.3",
+        "node-sass": "^4.3.0",
         "path": "^0.12.7",
         "postcss-loader": "^1.2.1",
         "react-addons-test-utils": "^15.4.1",
@@ -165,7 +170,6 @@
         "webpack-validator": "^2.2.11"
     },
     "dependencies": {
-        "aws-sdk": "^2.7.21",
         "classnames": "^2.2.5",
         "electron-debug": "^1.1.0",
         "electron-remote": "^1.0.8",

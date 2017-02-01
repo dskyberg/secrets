@@ -1,4 +1,8 @@
 @import '~react-toolbox/lib/colors';
+.section {
+    padding: 20px;
+}
+
 .fetching {
     color: $palette-blue-grey-300;
 }

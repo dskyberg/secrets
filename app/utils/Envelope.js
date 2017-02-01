@@ -17,7 +17,6 @@ export default class Envelope {
                 const keyBlob = keyData.CiphertextBlob;
                 const inner_ciphertext = AesGcm.encrypt(keyData.Plaintext, plainText, new Buffer(keyData.KeyId));
                 const cipherText = Envelope.join(keyBlob, inner_ciphertext);
-                console.log('Envelope.seal - final cipherText:', cipherText);
                 return cipherText;
             })
             .catch((err) => {

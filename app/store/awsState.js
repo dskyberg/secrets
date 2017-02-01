@@ -1,13 +1,16 @@
-import { observable, action, useStrict, computed } from 'mobx';
+import { observable, action, asMap, useStrict, computed } from 'mobx';
 useStrict(true);
 
 export class AwsState {
-    @observable region;
+    @observable init = false;
+    @observable region = 'us-west-2';
     @observable regions = [];
     @observable context = '';
+    @observable expiration = 0;
+    @observable credentials = null;
 
-    constructor() {
-
+    @action setInit(value) {
+        this.init = value;
     }
 
     @computed get regionsCount() {
@@ -36,6 +39,33 @@ export class AwsState {
             this.regions.clear();
         }
         this.regions = values;
+    }
+
+    @action
+    setCredentials(token) {
+        this.credentials = null;
+        this.expiration = 0;
+        if (!token || token === null) {
+            console.log('AwsState.secCredentials - no token:', token);
+            return;
+        }
+        this.credentials = token;
+        this.expiration = token.Expiration.getTime();
+    }
+
+    @computed get config() {
+        return {
+            region: this.region,
+            credentials: {
+                accessKeyId: this.credentials.AccessKeyId,
+                secretAccessKey: this.credentials.SecretAccessKey,
+                sessionToken: this.credentials.SessionToken
+            }
+        };
+    }
+
+    @computed get expired() {
+        return Date.now() >= this.expiration;
     }
 }
 const awsState = new AwsState();

@@ -5,8 +5,13 @@ export class AppState {
     @observable showDrawer = false;
     @observable searchText = '';
     @observable fetching = false;
+
     @observable snackActive = false;
+    @observable snackAction = 'Dismiss';
+    @observable snackType = 'accept';
+    @observable snackTimeout = 2000;
     @observable snackLabel = '';
+
     @observable addObjectShow = false;
     @observable addObjectPath = '';
     @observable addObjectValue = '';
@@ -31,9 +36,13 @@ export class AppState {
         this.snackActive = !this.snackActive;
     }
 
-    @action('setSnackLabel')
-    setSnackLabel(label) {
+    @action('showSnack')
+    showSnack(label, action, type, timeout) {
         this.snackLabel = label;
+        this.snackAction = action && action || 'Dismiss';
+        this.snackType = type && type || accept;
+        this.snackTimeout = timeout && timeout || 2000;
+        this.snackActive = true;
     }
 
     @action('toggleAddObject')

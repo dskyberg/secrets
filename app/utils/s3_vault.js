@@ -49,7 +49,6 @@ export default class S3Vault {
                     // Because Sneaker was running in the main process (remotely), we need
                     // to load the returned data into a normal TypedArray.
                     this.value = new Uint8Array(buffer);
-                    //console.log('S3Vault.open:', Utf8ArrayToStr(plainText));
                     return true;
                 })
                 .catch((e) => {

@@ -35,7 +35,6 @@ export default class S3ObjectList extends Component {
 
   }
   handleSelect = (path) => {
-    console.log('S3ObjectList.handleSelect:', path);
     if (path === this.state.selected) {
       this.setState({ selected: '' })
     } else {
@@ -49,14 +48,16 @@ export default class S3ObjectList extends Component {
     const {searchText} = appState;
 
     if (fetchingBuckets || fetchingPrefixes || fetchingObjects) {
-      return <h2 className={theme.fetching}>Fetching your objects...</h2>;
+      return <section>
+        <h2 className={theme.fetching}>Fetching your objects...</h2>
+      </section>;
     }
-    if (s3Objects.length === 0 ){
+    if (s3Objects.length === 0) {
       return null;
     }
 
     return (
-      <section style={{ padding: 20 }}>
+      <section className={theme.section}>
         <SearchInput />
         {
           s3Objects.keys().map((item) => {

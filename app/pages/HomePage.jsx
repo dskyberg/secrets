@@ -16,12 +16,15 @@ export default class HomePage extends Component {
     super(props, context);
 
   }
+
   handleFabClick = () => {
     this.props.router.push('/add');
   }
+
   handleAddObjectSave = () => {
     appState.toggleAddObject();
   }
+
   handleAddObjectCancel = () => {
     appState.toggleAddObject();
   }

@@ -35,7 +35,6 @@ export default class AddObjectPage extends Component {
     const {dialog} = require('electron').remote
     dialog.showOpenDialog({ properties: ['openFile'] }, (fileNames) => {
       if (!fileNames) {
-        console.log('handleFolderOpen: cancelled');
         return;
       }
       const path = fileNames[0].startsWith('/') && fileNames[0].substr(1) || fileNames[0];
@@ -156,14 +155,12 @@ export default class AddObjectPage extends Component {
     obj.save(kmsState.key, awsState.context, content)
     .then((ok) => {
       s3State.setS3Object(path, obj);
-      appState.setSnackLabel('Object added: ' + path);
-      appState.toggleSnack();
+      appState.showSnack('Object added: ' + path);
       this.props.router.push('/');
     })
     .catch((e) => {
-      appState.setSnackLabel('Add Object failed: ' + e);
-      appState.toggleSnack();
-    });
+      appState.showSnack(err.name + ':' + err.message, 'Add Object Failed', 'warning', 0);
+     });
   } 
 
 }

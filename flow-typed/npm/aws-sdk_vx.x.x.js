@@ -1,4 +1,4 @@
-// flow-typed signature: 80853869c470374e81c1cd32ec68a2ed
+// flow-typed signature: ac2f8d0655122b35fe7ab6dbe45acd99
 // flow-typed version: <<STUB>>/aws-sdk_v^2.7.21/flow_v0.37.0
 
 /**
@@ -59,6 +59,10 @@ declare module 'aws-sdk/clients/browser_default' {
 }
 
 declare module 'aws-sdk/clients/budgets' {
+  declare module.exports: any;
+}
+
+declare module 'aws-sdk/clients/clouddirectory' {
   declare module.exports: any;
 }
 
@@ -800,6 +804,9 @@ declare module 'aws-sdk/clients/browser_default.js' {
 }
 declare module 'aws-sdk/clients/budgets.js' {
   declare module.exports: $Exports<'aws-sdk/clients/budgets'>;
+}
+declare module 'aws-sdk/clients/clouddirectory.js' {
+  declare module.exports: $Exports<'aws-sdk/clients/clouddirectory'>;
 }
 declare module 'aws-sdk/clients/cloudformation.js' {
   declare module.exports: $Exports<'aws-sdk/clients/cloudformation'>;
