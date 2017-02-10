@@ -4,8 +4,8 @@ import awsState from '../store/awsState';
 import credentials from './credentials.json';
 
 export default function authN() {
-    const ego = require('electron').remote.require('./api/electron_google_oauth');
-    const auth = ego();
+    const { ElectronGoogleOAuth } = require('electron').remote.require('./electron_google_oauth');
+    const auth = new ElectronGoogleOAuth();
     return auth.getAccessToken(
             authState.scope,
             credentials.google.client_id,

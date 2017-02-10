@@ -2,25 +2,35 @@
  * Build config for electron 'Main Process' file
  */
 
+import path from 'path';
 import webpack from 'webpack';
-import validate from 'webpack-validator';
 import merge from 'webpack-merge';
 import BabiliPlugin from 'babili-webpack-plugin';
 import baseConfig from './webpack.config.base';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
-export default validate(merge(baseConfig, {
+const config = merge(baseConfig, {
     devtool: 'source-map',
 
-    entry: ['babel-polyfill', './app/main.development'],
+    entry: {
+        electron_google_oauth: './app/main/electron_google_oauth',
+        main: [
+            'babel-polyfill',
+            './app/main/main'
+        ]
+    },
 
     // 'main.js' in root
     output: {
-        path: __dirname,
-        filename: './app/main.js'
+        path: path.resolve(__dirname, './app/dist/main'),
+        filename: '[name].js',
+        libraryTarget: 'commonjs2'
     },
 
     plugins: [
-        new BabiliPlugin(),
+        new BabiliPlugin({
+            deadcode: false,
+        }),
         // Add source map support for stack traces in node
         // https://github.com/evanw/node-source-map-support
         // new webpack.BannerPlugin(
@@ -31,6 +41,11 @@ export default validate(merge(baseConfig, {
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
+        }),
+        new CopyWebpackPlugin([
+            { from: 'package.json', to: '../package.json' }
+        ], {
+            copyUnmodified: true
         })
     ],
 
@@ -49,4 +64,5 @@ export default validate(merge(baseConfig, {
         __dirname: false,
         __filename: false
     },
-}));
+});
+export default config;

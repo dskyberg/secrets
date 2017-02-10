@@ -6,19 +6,9 @@
 import path from 'path';
 import autoprefixer from 'autoprefixer';
 import webpack from 'webpack';
-import validate from 'webpack-validator';
 import merge from 'webpack-merge';
 import formatter from 'eslint-formatter-pretty';
 import baseConfig from './webpack.config.base';
-import { Joi } from 'webpack-validator';
-
-// Add any webpack schema extensions not covered by the default 
-// webpack schema validation.
-// This joi schema will be `Joi.concat`-ed with the internal schema
-const yourSchemaExtension = Joi.object({
-    // this would just allow the property and doesn't perform any additional validation
-    sassLoader: Joi.any()
-})
 
 const port = process.env.PORT || 3000;
 
@@ -77,22 +67,13 @@ const config = merge(baseConfig, {
     },
 
     plugins: [
-
-        // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
         new webpack.HotModuleReplacementPlugin(),
-
-        // “If you are using the CLI, the webpack process will not exit with an error code by enabling this plugin.”
-        // https://github.com/webpack/docs/wiki/list-of-plugins#noerrorsplugin
         new webpack.NoErrorsPlugin(),
-
-        // NODE_ENV should be production so that modules do not perform certain development checks
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development')
         })
     ],
-
-    // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
     target: 'electron-renderer'
 });
 
-export default validate(config, { schemaExtension: yourSchemaExtension });
+export default config;
