@@ -43,7 +43,7 @@ const config = merge(baseConfig, {
             }
         }),
         new CopyWebpackPlugin([
-            { from: 'package.json', to: '../package.json' }
+            { from: 'app/package.json', to: '../package.json' }
         ], {
             copyUnmodified: true
         })

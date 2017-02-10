@@ -24,6 +24,8 @@ const config = merge(baseConfig, {
     ],
 
     output: {
+        filename: 'www/bundle.js',
+        libraryTarget: 'commonjs2',
         publicPath: `http://localhost:${port}/dist/`
     },
     externals: ['ws'],
